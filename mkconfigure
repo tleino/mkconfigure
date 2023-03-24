@@ -72,6 +72,12 @@ make() {
 	fi
 }
 
+pcfile() {
+	PCFILE=$(basename $(pwd)).pc
+	echo "create: ${PCFILE}"
+	sed "s|@prefix@|${prefix}|g" ${PCFILE}.in >${PCFILE}
+}
+
 if [ ! -e configure.in ] ; then
 	touch configure.in
 fi
@@ -84,7 +90,7 @@ add_module() {
 	fi
 }
 
-OPT_MODULES="system pkgs run"
+OPT_MODULES="system pkgs run pcfile"
 MODULES="prefix make"
 
 echo '#!/bin/sh' >configure
