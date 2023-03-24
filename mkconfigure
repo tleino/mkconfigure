@@ -4,6 +4,7 @@ PROG=$0
 
 system() {
 	SYSTEM_CFLAGS=
+	SYSTEM_LDFLAGS=
 	case $(uname) in
 		Linux )
 			SYSTEM_CFLAGS=-D_POSIX_C_SOURCE=200809L
@@ -16,6 +17,7 @@ system() {
 	esac
 	echo "system: $(uname)"
 	echo "SYSTEM_CFLAGS=" ${SYSTEM_CFLAGS}
+	echo "SYSTEM_LDFLAGS=" ${SYSTEM_LDFLAGS}
 }
 
 prefix() {
@@ -68,6 +70,7 @@ make() {
 			-e "s|@PKG_CFLAGS@|${PKG_CFLAGS}|g" \
 			-e "s|@PKG_LDFLAGS@|${PKG_LDFLAGS}|g" \
 			-e "s|@SYSTEM_CFLAGS@|${SYSTEM_CFLAGS}|g" \
+			-e "s|@SYSTEM_LDFLAGS@|${SYSTEM_LDFLAGS}|g" \
 			Makefile.in >>Makefile
 	fi
 }
