@@ -87,9 +87,15 @@ make() {
 }
 
 pcfile() {
+	if [ -z ${VERSION} ] ; then
+		VERSION=0.0.0
+	fi
 	PCFILE=${PACKAGE}.pc
 	echo "create: ${PCFILE}"
-	sed "s|@prefix@|${prefix}|g" ${PCFILE}.in >${PCFILE}
+	sed \
+		-e "s|@prefix@|${prefix}|g" \
+		-e "s|@VERSION@|${VERSION}|g" \
+		${PCFILE}.in >${PCFILE}
 }
 
 if [ ! -e configure.in ] ; then
