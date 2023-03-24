@@ -1,6 +1,7 @@
 #!/bin/sh
 
 PROG=$0
+PACKAGE=$(basename $(pwd) | cut -d- -f1)
 
 system() {
 	SYSTEM_CFLAGS=
@@ -18,6 +19,12 @@ system() {
 	echo "system: $(uname)"
 	echo "SYSTEM_CFLAGS=" ${SYSTEM_CFLAGS}
 	echo "SYSTEM_LDFLAGS=" ${SYSTEM_LDFLAGS}
+}
+
+VERSION=0.0.0
+version() {
+	VERSION=$1
+	echo "VERSION=${VERSION}"
 }
 
 prefix() {
@@ -71,12 +78,14 @@ make() {
 			-e "s|@PKG_LDFLAGS@|${PKG_LDFLAGS}|g" \
 			-e "s|@SYSTEM_CFLAGS@|${SYSTEM_CFLAGS}|g" \
 			-e "s|@SYSTEM_LDFLAGS@|${SYSTEM_LDFLAGS}|g" \
+			-e "s|@VERSION@|${VERSION}|g" \
+			-e "s|@PACKAGE@|${PACKAGE}|g" \
 			Makefile.in >>Makefile
 	fi
 }
 
 pcfile() {
-	PCFILE=$(basename $(pwd)).pc
+	PCFILE=${PACKAGE}.pc
 	echo "create: ${PCFILE}"
 	sed "s|@prefix@|${prefix}|g" ${PCFILE}.in >${PCFILE}
 }
@@ -93,7 +102,7 @@ add_module() {
 	fi
 }
 
-OPT_MODULES="system pkgs run pcfile"
+OPT_MODULES="system pkgs run pcfile version"
 MODULES="prefix make"
 
 echo '#!/bin/sh' >configure
