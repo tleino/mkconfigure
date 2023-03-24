@@ -128,7 +128,7 @@ for a in ${MODULES} ; do
 	add_module $a
 done
 
-echo "prefix" >>configure
+echo 'prefix $1' >>configure
 cat configure.in >>configure
 echo "make" >>configure
 
