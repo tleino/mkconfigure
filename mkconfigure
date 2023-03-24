@@ -52,10 +52,10 @@ pkgs() {
 	for a in ${PKGS} ; do
 		checkpkg $a
 	done
-	PKGS_CFLAGS=$(pkg-config ${PKGS} --cflags)
-	PKGS_LDFLAGS=$(pkg-config ${PKGS} --libs)
-	echo "PKGS_CFLAGS=${PKGS_CFLAGS}"
-	echo "PKGS_LDFLAGS=${PKGS_LDFLAGS}"
+	PKG_CFLAGS=$(pkg-config ${PKGS} --cflags)
+	PKG_LDFLAGS=$(pkg-config ${PKGS} --libs)
+	echo "PKG_CFLAGS=${PKG_CFLAGS}"
+	echo "PKG_LDFLAGS=${PKG_LDFLAGS}"
 }
 
 make() {
@@ -65,8 +65,8 @@ make() {
 		echo >>Makefile
 		sed \
 			-e "s|@prefix@|${prefix}|g" \
-			-e "s|@PKGS_CFLAGS@|${PKGS_CFLAGS}|g" \
-			-e "s|@PKGS_LDFLAGS@|${PKGS_LDFLAGS}|g" \
+			-e "s|@PKG_CFLAGS@|${PKG_CFLAGS}|g" \
+			-e "s|@PKG_LDFLAGS@|${PKG_LDFLAGS}|g" \
 			-e "s|@SYSTEM_CFLAGS@|${SYSTEM_CFLAGS}|g" \
 			Makefile.in >>Makefile
 	fi
