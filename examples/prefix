@@ -1,0 +1,6 @@
+prefix() {
+	echo "Customized version of prefix"
+	prefix=$HOME
+	if [ "$#" -eq 1 ] ; then prefix=$1 ; fi
+	echo "prefix=${prefix}"
+}

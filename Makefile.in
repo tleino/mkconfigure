@@ -1,0 +1,9 @@
+prefix = @prefix@
+exec_prefix = $(prefix)
+bindir = $(exec_prefix)/bin
+
+all:
+install:
+	install -D mkconfigure $(DESTDIR)$(bindir)
+uninstall:
+	rm -f $(DESTDIR)$(bindir)/mkconfigure
